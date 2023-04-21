@@ -1,0 +1,44 @@
+{% load django_bootstrap5 %}
+
+{% bootstrap_form form %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous">
+</script>
+<script>
+    let search = $('#id_search');
+    let url = 'http://127.0.0.1:8000/json-articles/?search=';
+
+    let addArticle = function (article, container){
+        let div = document.createElement('div');
+        let title = document.createElement('p');
+        title.innerText = `Title - ${article.title}`;
+        let author = document.createElement('p');
+        author.innerText = `Author - ${article.author}`;
+        let link = document.createElement('a');
+        link.innerText = 'Подробнее';
+        $(link).attr('href', `/article/${article.id}`);
+        div.append(title);
+        div.append(author);
+        div.append(link);
+        container.append(div)
+    }
+    renderResult = function (articles){
+        let article_container = $('#articles');
+        article_container.empty();
+        for(let article of articles){
+            addArticle(article, article_container);
+        }
+    }
+    let getArticles = function (){
+        let value = search.val();
+        $.ajax({
+            url: url + value
+        }).done(
+            function (data){
+                renderResult(data);
+            }
+        )
+    }
+    search.on('keyup', getArticles);
+</script>
