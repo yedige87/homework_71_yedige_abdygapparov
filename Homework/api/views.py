@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins, generics
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 
+from api.permissions import IsOwnerOrReadOnly
 from api.serializers import PostSerializer
 from posts.models import Post
 
@@ -23,7 +23,7 @@ class DetailView(generics.RetrieveAPIView):
 class UpdateView(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 class CreateView(generics.CreateAPIView):
@@ -35,7 +35,7 @@ class CreateView(generics.CreateAPIView):
 class DeleteView(generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
 
     def delete(self, request, *args, **kwargs):
         pk = kwargs['pk']

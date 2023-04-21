@@ -18,7 +18,17 @@
             <a href="{% url 'post_detail' post.id %}"><img class="post_pic" src="/uploads/{{ post.image }}"></a>
         </p>
         <p>{{post.description}}</p>
-        <a href="{% url 'make_like' post.id %}"><img src="/static/images/like_bw.png"></a> - {{post.user_likes.count}}
+
+        {% if user in post.user_likes.all %}
+            <a href="{% url 'make_like_unlike' post.id %}">
+                <img src="/static/images/ths.svg" width="40" height="auto">
+            </a>
+        {% else %}
+            <a href="{% url 'make_like_unlike' post.id %}">
+                <img src="/static/images/thl.svg"  width="40" height="auto">
+            </a>
+        {% endif %}  - {{post.user_likes.count}}
+
         <img src="/static/images/comment.png"> - {{post.comments.count}}
 
         {% if user.is_authenticated %}

@@ -147,6 +147,19 @@ def make_like_view(request, pk):
     post.save()
     return redirect('home')
 
+def make_like_unlike_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    curr_user = request.user
+    if not curr_user:
+        messages.warning(request, "Вы не авторизованы !")
+        return redirect('home')
+    if curr_user in post.user_likes.all():
+        post.user_likes.remove(curr_user)
+    else:
+        post.user_likes.add(curr_user)
+
+    post.save()
+    return redirect('home')
 class UserChangeView(UpdateView):
     model = get_user_model()
     form_class = UserChangeForm

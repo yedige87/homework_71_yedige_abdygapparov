@@ -3,9 +3,7 @@ from django.template.defaulttags import url
 from django.urls import path
 
 from .views import ProfileView, subscribe_view, LoginView, make_like_view, UserChangeView, unsubscribe_view, \
-    RegisterCustomUserView, ChangeCustomUserPasswordView
-
-
+    RegisterCustomUserView, ChangeCustomUserPasswordView, make_like_unlike_view
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
@@ -15,5 +13,6 @@ urlpatterns = [
     path('subsribe/<int:pk>', subscribe_view, name='subsribe'),
     path('unsubsribe/<int:pk>', unsubscribe_view, name='unsubsribe'),
     path('make_like/<int:pk>', make_like_view, name='make_like'),
+    path('make_like_unlike/<int:pk>', make_like_unlike_view, name='make_like_unlike'),
     path('profile/<int:pk>/change', UserChangeView.as_view(), name='user_change'),
 ]
