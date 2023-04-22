@@ -14,25 +14,25 @@ class PostAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
-class DetailView(generics.RetrieveAPIView):
+class PostAPIDetailView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
-class UpdateView(generics.UpdateAPIView):
+class PostAPIUpdateView(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsOwnerOrReadOnly,)
 
 
-class CreateView(generics.CreateAPIView):
+class PostAPICreateView(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
-class DeleteView(generics.DestroyAPIView):
+class PostAPIDeleteView(generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsOwnerOrReadOnly,)
